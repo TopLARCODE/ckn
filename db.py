@@ -23,8 +23,6 @@ class Database:
         with self.connection:
             return self.cursor.execute("UPDATE `users` SET `kormyes` = ? WHERE `user_id` = ?", (whoaset, user_id,))
 
-
-
     def get_signup(self, user_id):
         with self.connection:
             result = self.cursor.execute("SELECT `signup` FROM `users` WHERE `user_id` = ?", (user_id,)).fetchall()
@@ -53,6 +51,11 @@ class Database:
         with self.connection:
             return self.cursor.execute("UPDATE `users` SET `money` = ? WHERE `user_id` = ?", (money, user_id,))
 
+
+    def set_moneyz(self, id, money):
+        with self.connection:
+            return self.cursor.execute("UPDATE `users` SET `money` = ? WHERE `id` = ?", (money, id,))
+
     def set_kurs(self, user_id, kurs):
         with self.connection:
             return self.cursor.execute("UPDATE `users` SET `kurs` = ? WHERE `user_id` = ?", (kurs, user_id,))
@@ -77,6 +80,14 @@ class Database:
             for row in result:
                 money = str(row[0])
             return money
+    
+    def get_moneyz(self, id):
+        with self.connection:
+            result = self.cursor.execute("SELECT `money` FROM `users` WHERE `id` = ?", (id,)).fetchall()
+            for row in result:
+                moneyz = str(row[0])
+            return moneyz
+
 
     def get_korm(self, user_id):
         with self.connection:
@@ -84,6 +95,7 @@ class Database:
             for row in result:
                 korm = str(row[0])
             return korm
+
 
     def get_kormlvl(self, user_id):
         with self.connection:
@@ -99,6 +111,7 @@ class Database:
             for row in result:
                 bank = str(row[0])
             return bank
+            
 
     def get_bbb(self, user_id):
         with self.connection:
@@ -129,3 +142,37 @@ class Database:
             for row in result:
                 sum = str(row[0])
             return sum
+
+    def get_info(self, id):
+        with self.connection:
+            csa = self.cursor.execute("SELECT `nickname` FROM `users` WHERE `id` = ?", (id,)).fetchall()
+            for row in csa:
+                nickname = str(row[0])
+
+            rea = self.cursor.execute("SELECT `real` FROM `users` WHERE `id` = ?", (id,)).fetchall()
+            for row in rea:
+                reas = str(row[0])
+
+            csaa = self.cursor.execute("SELECT `user_id` FROM `users` WHERE `id` = ?", (id,)).fetchall()
+            for row in csaa:
+                user_id = str(row[0])
+                        
+            csaaa = self.cursor.execute("SELECT `money` FROM `users` WHERE `id` = ?", (id,)).fetchall()
+            for row in csaaa:
+                money = str(row[0])
+
+            csaaaa = self.cursor.execute("SELECT `kormyes` FROM `users` WHERE `id` = ?", (id,)).fetchall()
+            for row in csaaaa:
+                korm = str(row[0])
+
+            csaaaaa = self.cursor.execute("SELECT `time_sub` FROM `users` WHERE `id` = ?", (id,)).fetchall()
+            for row in csaaaaa:
+                time = str(row[0])
+
+            csaaaaaa = self.cursor.execute("SELECT `korm_lvl` FROM `users` WHERE `id` = ?", (id,)).fetchall()
+            for row in csaaaaaa:
+                kormlv = str(row[0])
+            return 'User: *' + id + '*\n\nNick: [' + nickname + '](tg://user?id=' + str(user_id) + ')\nReal Nick: *' + reas + '*\nId: *' + user_id + '*\nMoney: *' + money + '*\nKorm: *' + korm + '*\nTime Start: *' + time + '*\nLvl: *' + kormlv + '*\n'
+            
+
+            

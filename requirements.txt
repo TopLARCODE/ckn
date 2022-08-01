@@ -23,4 +23,4 @@ pytz==2022.1
 requests==2.27.1
 rich==11.2.0
 urllib3==1.26.8
-pyqiwip2p==2.0.2.2
+sqlite3
